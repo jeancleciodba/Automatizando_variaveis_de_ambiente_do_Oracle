@@ -1,0 +1,33 @@
+Abra o arquivo com o comando:
+
+vi ~/.bash_profile
+Em seguida, adicione o seguinte conteúdo:
+
+# .bash_profile
+
+# Carrega os aliases e funções definidos no .bashrc, se existirem
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi
+
+# Configura o PATH do usuário
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+export PATH
+
+# Define a variável ORACLE_SID
+export ORACLE_SID=orcl
+
+# Executa o oraenv automaticamente para carregar as variáveis de ambiente do Oracle
+. /usr/local/bin/oraenv <<< $ORACLE_SID
+
+# Inicia o Listener do Oracle
+lsnrctl start
+
+# Inicia o banco de dados Oracle utilizando um script SQL
+sqlplus / as sysdba @/home/oracle/startup.sql
+Agora, crie um script SQL para iniciar o banco de dados. Abra o editor de texto e crie o arquivo startup.sql:
+
+vi ~/startup.sql
+Adicione o seguinte comando no arquivo:
+
+startup;
